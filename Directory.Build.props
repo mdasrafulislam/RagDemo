@@ -1,0 +1,19 @@
+<Project>
+  <PropertyGroup>
+    <!-- The shipping target. Override for a local build on an older SDK:
+           dotnet build -p:RagTargetFramework=net9.0
+         Note the ASP.NET/OpenApi packages are pinned to 10.0.*, so only the
+         Domain/Application layers and their tests build under an override. -->
+    <RagTargetFramework Condition=" '$(RagTargetFramework)' == '' ">net10.0</RagTargetFramework>
+    <TargetFramework>$(RagTargetFramework)</TargetFramework>
+
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <EnforceCodeStyleInBuild>true</EnforceCodeStyleInBuild>
+    <InvariantGlobalization>true</InvariantGlobalization>
+    <!-- Semantic Kernel gates several APIs behind experimental diagnostics. -->
+    <NoWarn>$(NoWarn);SKEXP0001;SKEXP0010;SKEXP0050</NoWarn>
+  </PropertyGroup>
+</Project>

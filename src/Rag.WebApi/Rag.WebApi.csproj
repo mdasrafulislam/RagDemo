@@ -1,0 +1,19 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <RootNamespace>Rag.WebApi</RootNamespace>
+    <UserSecretsId>rag-webapi-plan-info</UserSecretsId>
+  </PropertyGroup>
+  <!-- Presentation tier. References only the business tier: it never talks to the
+       database directly, which is the whole point of the three-tier split. -->
+  <ItemGroup>
+    <ProjectReference Include="..\Rag.Business\Rag.Business.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+    <PackageReference Include="Scalar.AspNetCore" />
+  </ItemGroup>
+  <ItemGroup>
+    <!-- The fixed documents folder must exist next to the binary at runtime. -->
+    <Content Include="Documents\**" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

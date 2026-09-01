@@ -1,0 +1,31 @@
+<Project>
+  <PropertyGroup>
+    <ManagePackageVersionsCentrally>true</ManagePackageVersionsCentrally>
+  </PropertyGroup>
+  <ItemGroup>
+    <!-- Versions verified against nuget.org by compiling a probe, not assumed. -->
+
+    <!-- Business tier: chunking, embeddings, answer generation -->
+    <PackageVersion Include="Microsoft.SemanticKernel" Version="1.80.0" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Core" Version="1.80.0" />
+    <PackageVersion Include="Microsoft.SemanticKernel.Connectors.OpenAI" Version="1.80.0" />
+    <PackageVersion Include="Microsoft.Extensions.AI.Abstractions" Version="10.9.0" />
+
+    <!-- Repository tier: PostgreSQL + pgvector -->
+    <PackageVersion Include="Npgsql" Version="10.0.3" />
+    <!-- NOTE: the Npgsql integration lives INSIDE the `Pgvector` package, in the
+         `Pgvector.Npgsql` NAMESPACE. There is no `Pgvector.Npgsql` package. -->
+    <PackageVersion Include="Pgvector" Version="0.3.2" />
+
+    <!-- Shared plumbing -->
+    <PackageVersion Include="Microsoft.Extensions.DependencyInjection.Abstractions" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Logging.Abstractions" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Options.DataAnnotations" Version="10.0.11" />
+    <PackageVersion Include="Microsoft.Extensions.Options.ConfigurationExtensions" Version="10.0.11" />
+
+    <!-- Web tier -->
+    <!-- Must track the installed ASP.NET Core 10 patch band. -->
+    <PackageVersion Include="Microsoft.AspNetCore.OpenApi" Version="10.0.11" />
+    <PackageVersion Include="Scalar.AspNetCore" Version="2.17.2" />
+  </ItemGroup>
+</Project>
