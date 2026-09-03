@@ -37,8 +37,6 @@ internal static class SearchEndpoints
                 request?.TopK,
                 request?.Category,
                 request?.MinSimilarity,
-                generateAnswer: request?.GenerateAnswer ?? true,
-                includeSources: request?.IncludeSources ?? true,
                 cancellationToken)
             .ConfigureAwait(false);
 

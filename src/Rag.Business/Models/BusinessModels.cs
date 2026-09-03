@@ -36,10 +36,8 @@ public sealed record SearchHit(long RecordId, string Category, string ChunkText,
 public sealed record SearchResult(
     string Query,
     string? Answer,
-    bool Answered,
-    IReadOnlyList<long> CitedRecordIds,
-    IReadOnlyList<SearchHit> Sources,
-    SearchUsage Usage);
+    bool Answered
+   );
 
 /// <param name="ChunksUsedAsContext">
 /// How many retrieved chunks were actually sent to the model. Lower than

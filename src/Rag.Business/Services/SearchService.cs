@@ -20,8 +20,6 @@ public interface ISearchService
         int? topK,
         string? category,
         double? minSimilarity,
-        bool generateAnswer,
-        bool includeSources,
         CancellationToken cancellationToken);
 }
 
@@ -43,8 +41,6 @@ public sealed class SearchService(
         int? topK,
         string? category,
         double? minSimilarity,
-        bool generateAnswer,
-        bool includeSources,
         CancellationToken cancellationToken)
     {
         var stopwatch = Stopwatch.StartNew();
@@ -106,26 +102,10 @@ public sealed class SearchService(
             return new SearchResult(
                 trimmedQuery,
                 "The indexed documents do not contain anything relevant to that question.",
-                Answered: false,
-                CitedRecordIds: [],
-                Sources: [],
-                new SearchUsage(0, 0, null, null, null, stopwatch.ElapsedMilliseconds, "no_context"));
+                Answered: false
+                );
         }
 
-        // 4. Retrieval-only mode: return the chunks without paying for generation.
-        if (!generateAnswer)
-        {
-            stopwatch.Stop();
-            return new SearchResult(
-                trimmedQuery,
-                Answer: null,
-                Answered: false,
-                CitedRecordIds: [],
-                Sources: includeSources ? hits : [],
-                new SearchUsage(
-                    hits.Count, 0, topSimilarity, null, null,
-                    stopwatch.ElapsedMilliseconds, "generation_skipped"));
-        }
 
         // 5. Fit the context to its character budget by dropping whole low-ranked chunks. Never
         //    truncate mid-chunk: cutting a chunk in half can sever the sentence holding the
@@ -142,17 +122,8 @@ public sealed class SearchService(
         return new SearchResult(
             trimmedQuery,
             answer.Text,
-            answer.AnsweredFromContext,
-            answer.CitedRecordIds,
-            includeSources ? used : [],
-            new SearchUsage(
-                hits.Count,
-                used.Count,
-                topSimilarity,
-                answer.InputTokens,
-                answer.OutputTokens,
-                stopwatch.ElapsedMilliseconds,
-                answer.FinishReason));
+            answer.AnsweredFromContext
+            );
     }
 
     private string ValidateQuery(string? query)
